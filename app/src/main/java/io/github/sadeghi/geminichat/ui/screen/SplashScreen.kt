@@ -2,9 +2,7 @@ package io.github.sadeghi.geminichat.ui.screen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme.typography
@@ -20,9 +18,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.LayoutDirection
-import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
+import io.github.sadeghi.geminichat.ui.components.SpacerHeight
 import io.github.sadeghi.geminichat.viewModel.SplashViewModel
 import kotlinx.coroutines.delay
 
@@ -50,7 +48,7 @@ fun SplashScreen(
                         color = Color.Green,
                         textAlign = TextAlign.Center
                     )
-                    Spacer(Modifier.height(20.dp))
+                    SpacerHeight(20)
                     CircularProgressIndicator()
 
                 }
@@ -61,7 +59,7 @@ fun SplashScreen(
                         color = Color.Red,
                         textAlign = TextAlign.Center
                     )
-                    Spacer(Modifier.height(20.dp))
+                    SpacerHeight(20)
                     Button(onClick = { viewModel.checkInternet() })
                     {
                         Text("تلاش مجدد")
