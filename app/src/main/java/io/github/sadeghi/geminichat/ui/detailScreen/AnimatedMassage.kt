@@ -9,11 +9,11 @@ import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import io.github.sadeghi.geminichat.data.model.ChatMassage
+import io.github.sadeghi.geminichat.data.model.ChatMessage
 
 @Composable
-fun AnimatedMassage(
-    massage: ChatMassage
+fun AnimatedMessage(
+    message: ChatMessage
 ) {
     val visibleState = remember {
         MutableTransitionState(false).apply {
@@ -30,6 +30,6 @@ fun AnimatedMassage(
                 + slideOutVertically(tween(300))
 
     ) {
-        ChatBubble(massage.massage, massage.isFromUser)
+        ChatBubble(message.message, message.isFromUser)
     }
 }

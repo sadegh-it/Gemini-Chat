@@ -27,7 +27,7 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import io.github.sadeghi.geminichat.ui.components.AppButton
 import io.github.sadeghi.geminichat.ui.components.AppTextField
 import io.github.sadeghi.geminichat.ui.components.SpacerHeight
-import io.github.sadeghi.geminichat.ui.detailScreen.AnimatedMassage
+import io.github.sadeghi.geminichat.ui.detailScreen.AnimatedMessage
 import io.github.sadeghi.geminichat.ui.detailScreen.TypingBubble
 import io.github.sadeghi.geminichat.viewModel.ChatViewModel
 
@@ -35,15 +35,15 @@ import io.github.sadeghi.geminichat.viewModel.ChatViewModel
 fun ChatScreen(
     viewModel: ChatViewModel = hiltViewModel()
 ) {
-    val massages by remember { derivedStateOf { viewModel.massages } }
+    val messages by remember { derivedStateOf { viewModel.messages } }
     var userInput by remember { mutableStateOf("") }
     val isTyping = viewModel.isTyping
     val listState = rememberLazyListState()
 
-    LaunchedEffect(massages.size) {
-        if (massages.isNotEmpty()) {
+    LaunchedEffect(messages.size) {
+        if (messages.isNotEmpty()) {
 
-            listState.animateScrollToItem(massages.size - 1)
+            listState.animateScrollToItem(messages.size - 1)
         }
     }
     Column(
@@ -65,8 +65,8 @@ fun ChatScreen(
             contentPadding = PaddingValues(vertical = 10.dp)
 
         ) {
-            items(massages) { massage ->
-                AnimatedMassage(massage)
+            items(messages) { message ->
+                AnimatedMessage(message)
             }
             if (isTyping) {
                 item {
@@ -93,7 +93,7 @@ fun ChatScreen(
 
                 AppButton(
                     onClick = {
-                        viewModel.sendMassage(userInput)
+                        viewModel.sendMessage(userInput)
                         userInput = ""
                     },
                     enabled = !isTyping && userInput.isNotBlank()

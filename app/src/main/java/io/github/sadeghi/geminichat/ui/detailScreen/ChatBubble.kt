@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun ChatBubble(massage: String, isFromUser: Boolean) {
+fun ChatBubble(message: String, isFromUser: Boolean) {
 
     val backgroundColor =
         if (isFromUser) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface
@@ -50,7 +50,7 @@ fun ChatBubble(massage: String, isFromUser: Boolean) {
                 .padding(horizontal = 16.dp, vertical = 10.dp)
         ) {
             Text(
-                text = massage,
+                text = message,
                 color = textColor,
                 fontSize = 16.sp,
 

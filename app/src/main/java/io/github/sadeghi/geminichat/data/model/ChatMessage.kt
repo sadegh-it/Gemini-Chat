@@ -1,6 +1,6 @@
 package io.github.sadeghi.geminichat.data.model
 
-data class ChatMassage(
-    val massage: String,
+data class ChatMessage(
+    val message: String,
     val isFromUser: Boolean
 )
