@@ -9,14 +9,13 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.sadeghi.geminichat.data.model.ChatMessage
 import io.github.sadeghi.geminichat.data.repository.ChatRepository
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class ChatViewModel @Inject constructor(
-    private val repository: ChatRepository,
-) : ViewModel() {
+    private val repository: ChatRepository
+    ) : ViewModel() {
 
     private val _messages = mutableStateListOf<ChatMessage>()
     val messages: List<ChatMessage> get() = _messages
@@ -46,13 +45,21 @@ class ChatViewModel @Inject constructor(
 
         viewModelScope.launch {
             repository.addMessage(userMsg)
+            isTyping = true
+
+            val responseText = repository.getGeminiChatCompletion()
+            val response = ChatMessage(responseText, false)
+            _messages.add(response)
+            repository.addMessage(response)
+            isTyping = false
 
         }
 
-        startTypingSimulation()
+        /* startTypingSimulation()*/
     }
 
-    private fun startTypingSimulation() {
+
+    /*private fun startTypingSimulation() {
         viewModelScope.launch {
 
             isTyping = true
@@ -68,5 +75,5 @@ class ChatViewModel @Inject constructor(
 
             isTyping = false
         }
-    }
+    }*/
 }
