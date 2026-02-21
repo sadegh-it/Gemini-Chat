@@ -1,6 +1,7 @@
 package io.github.sadeghi.geminichat.ui.screen
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
@@ -38,6 +40,7 @@ fun ChatScreen(
     val messages by remember { derivedStateOf { viewModel.messages } }
     var userInput by remember { mutableStateOf("") }
     val isTyping = viewModel.isTyping
+    val isLoaded = viewModel.isLoaded
     val listState = rememberLazyListState()
 
     LaunchedEffect(messages.size) {
@@ -46,61 +49,68 @@ fun ChatScreen(
             listState.animateScrollToItem(messages.size - 1)
         }
     }
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(
-                start = 12.dp,
-                end = 12.dp,
-                bottom = 50.dp
-            )
-    )
-    {
-        LazyColumn(
-
-            modifier = Modifier
-                .weight(1f)
-                .fillMaxWidth(),
-            state = listState,
-            contentPadding = PaddingValues(vertical = 10.dp)
-
+    if (!isLoaded)
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
         ) {
-            items(messages) { message ->
-                AnimatedMessage(message)
+            CircularProgressIndicator()
+        } else
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(
+                    start = 12.dp,
+                    end = 12.dp,
+                    bottom = 50.dp
+                )
+        )
+        {
+            LazyColumn(
+
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth(),
+                state = listState,
+                contentPadding = PaddingValues(vertical = 10.dp)
+
+            ) {
+                items(messages) { message ->
+                    AnimatedMessage(message)
+                }
+                if (isTyping) {
+                    item {
+                        TypingBubble()
+                    }
+                }
             }
-            if (isTyping) {
-                item {
-                    TypingBubble()
+            SpacerHeight(10)
+            CompositionLocalProvider(
+                LocalLayoutDirection provides LayoutDirection.Rtl
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                )
+                {
+                    AppTextField(
+                        value = userInput,
+                        onValueChange = { userInput = it },
+                        enabled = !isTyping,
+                        modifier = Modifier.weight(1f)
+                    )
+
+                    AppButton(
+                        onClick = {
+                            viewModel.sendMessage(userInput)
+                            userInput = ""
+                        },
+                        enabled = !isTyping && userInput.isNotBlank()
+                    )
+
                 }
             }
         }
-        SpacerHeight(10)
-        CompositionLocalProvider(
-            LocalLayoutDirection provides LayoutDirection.Rtl
-        ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center
-            )
-            {
-                AppTextField(
-                    value = userInput,
-                    onValueChange = { userInput = it },
-                    enabled = !isTyping,
-                    modifier = Modifier.weight(1f)
-                )
-
-                AppButton(
-                    onClick = {
-                        viewModel.sendMessage(userInput)
-                        userInput = ""
-                    },
-                    enabled = !isTyping && userInput.isNotBlank()
-                )
-
-            }
-        }
-    }
 }
 
