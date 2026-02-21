@@ -27,7 +27,5 @@ object DatabaseDI {
     @Provides
     fun provideDao(db: MainDatabase): MessagesDao = db.messageDao()
 
-    @Provides
-    fun providesRepository(dao: MessagesDao): ChatRepository =
-        ChatRepository(dao)
+
 }
