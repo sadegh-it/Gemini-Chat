@@ -250,14 +250,15 @@ It is intended as a learning and architectural reference project.
 
 ## 🏷 Version
 
-![GitHub release](https://img.shields.io/github/v/release/sadegh-it/Gemini-Chat?label=Latest%20Release)
+ 
+[![Latest Release](https://img.shields.io/badge/Latest%20Release-v1.0.0-gery?style=plastic&logo=github)](https://github.com/sadegh-it/Gemini-Chat/releases/tag/v1.0.0)
 
 
 ## 📥 Download
 
 You can download the latest stable APK from the official GitHub Releases page:
 
-[![Download Latest Release](https://img.shields.io/badge/Download-APK-blue?style=for-the-badge&logo=android)](https://github.com/sadegh-it/Gemini-Chat/releases/latest)
+[![Download Latest Release](https://img.shields.io/badge/Download-APK-blue?style=for-the-badge&logo=android)](https://github.com/sadegh-it/Gemini-Chat/releases/download/v1.0.0/Gemini-Chat.apk)
 
 ---
 
