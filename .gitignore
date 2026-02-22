@@ -1,15 +1,106 @@
-*.iml
-.gradle
-/local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
-.DS_Store
-/build
-/captures
-.externalNativeBuild
-.cxx
+
+# ------------------------------
+# Android / Gradle
+# ------------------------------
+
+.gradle/
+build/
+*/build/
 local.properties
+generated/
+captures/
+
+# Built outputs
+*.apk
+*.aab
+*.ap_
+*.dex
+
+# ------------------------------
+# Android Studio / IntelliJ
+# ------------------------------
+
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+
+# ------------------------------
+# Kotlin
+# ------------------------------
+
+*.kotlin_module
+.kotlin/
+
+# ------------------------------
+# Native / NDK
+# ------------------------------
+
+.externalNativeBuild/
+.cxx/
+
+# ------------------------------
+# Signing / Keys
+# ------------------------------
+
+*.jks
+*.keystore
+*.pem
+
+# ------------------------------
+# KSP / KAPT
+# ------------------------------
+
+.ksp/
+ksp/
+kapt/
+annotationProcessors.json
+
+# ------------------------------
+# Room
+# ------------------------------
+
+schemas/
+
+# ------------------------------
+# Environment / Secrets
+# ------------------------------
+
+.env
+.env.*
+*.env
+secrets.properties
+
+# ------------------------------
+# Firebase
+# ------------------------------
+
+google-services.json
+
+# ------------------------------
+# Logs & Coverage
+# ------------------------------
+
+*.log
+coverage/
+jacoco.exec
+reports/
+test-output/
+
+# ------------------------------
+# OS Files
+# ------------------------------
+
+.DS_Store
+Thumbs.db
+
+# ------------------------------
+# Temporary
+# ------------------------------
+
+tmp/
+temp/
+*.tmp
+*.swp
+
