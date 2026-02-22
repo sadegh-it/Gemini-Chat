@@ -57,7 +57,6 @@ All dependencies are centrally managed in the [libs.versions.toml](https://githu
 
 [![Networking](https://img.shields.io/badge/Networking-Retrofit-grey?style=flat&logo=framework&color=lightblue)](https://developer.android.com/training/dependency-injection/hilt-android)
 [![DI](https://img.shields.io/badge/DI-Hilt-grey?style=flat&logo=devpost&color=red)](https://developer.android.com/training/dependency-injection/hilt-android)
-[![Coroutines](https://img.shields.io/badge/Asynchronous-Coroutines-grey?style=flat&logo=kotlin&color=%238f00ff)](https://kotlinlang.org/docs/coroutines-overview.html)
 [![Room](https://img.shields.io/badge/Database-ROOM-grey?style=flat&logo=sqlite&logoColor=%23cbcbcb&color=lightgrey)](https://developer.android.com/jetpack/androidx/releases/room)
 [![Navigation](https://img.shields.io/badge/Navigation-Component-grey?style=flat&logo=jetpackcompose&logoColor=%2397c900&color=yellowgreen)](https://developer.android.com/guide/navigation)
 [![Compose](https://img.shields.io/badge/Jetpack%20Compose-UI-brightgreen)](https://developer.android.com/compose)
@@ -132,7 +131,7 @@ Never commit your API key to GitHub. Follow these steps:
 3. Add your API key like this:
 
 ```properties
-GEMINI_API_KEY=your_api_key_here
+apikey=your_api_key_here
 ```
 > ⚠️ Important:  
 > local.properties is automatically ignored by Git.  
@@ -143,12 +142,32 @@ GEMINI_API_KEY=your_api_key_here
 
 Open your app/build.gradle.kts (or app/build.gradle) file.
 
-Inside the android { defaultConfig { ... } } block, add:
+Inside the android add:
 ```kotlin
-buildConfigField(
-    "String", "GEMINI_API_KEY",
-    "\"${providers.gradleProperty("GEMINI_API_KEY").getOrElse("")}\""
-)
+import java.io.FileInputStream
+import java.util.Properties
+
+android {
+    namespace = "io.github"
+    compileSdk = 36
+
+    //thie
+    val file =rootProject.file("local.properties")
+    val properties = Properties()
+    properties.load(FileInputStream(file))
+
+    defaultConfig {
+        .
+        .
+        //this
+        buildConfigField("String","GEMINI_API_KEY","\"${properties.getProperty("apikey")}\"")
+
+    }
+buildFeatures {
+        compose = true
+        buildConfig = true  //this
+    }
+}
 ```
 Sync the project with Gradle files.
 
@@ -162,6 +181,12 @@ Anywhere you need the API key (e.g., repository or network layer), use:
 val apiKey = BuildConfig.GEMINI_API_KEY
 if (apiKey.isBlank()) throw IllegalStateException("Add GEMINI_API_KEY to local.properties!")
 ```
+or 
+
+```kotlin
+val apikey = BuildConfig.GEMINI_API_KEY
+```
+
 BuildConfig.GEMINI_API_KEY fetches the key securely from local.properties.
 
 The check ensures that if the key is missing, your app throws a clear error instead of silently failing.
